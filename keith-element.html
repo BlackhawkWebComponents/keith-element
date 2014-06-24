@@ -1,0 +1,39 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Element providing ..
+
+##### Example
+
+    <keith-element
+        title=""
+    </keith-element>
+
+@element keith-element
+@blurb Element providing ..
+@status alpha
+@url http://blackhawkwebcomponents.github.io/keith-element
+-->
+<polymer-element name="keith-element" attributes="title">
+    <template>
+        <style>
+
+        </style>
+        <b>Keith's Element</b>
+        <p>{{title}}</p>
+    </template>
+    <script>
+        Polymer('keith-element', {
+            /**
+             * A title to be displayed on top of the query results list.
+             * @attribute title
+             * @type string
+             */
+            title: 'Big Query Results',
+            ready: function () {
+                this.queryResults = [];
+            }
+        });
+    </script>
+</polymer-element>
+
