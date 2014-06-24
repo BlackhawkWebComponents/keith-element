@@ -1,0 +1,36 @@
+{
+  "name": "keith-element",
+  "homepage": "http://blackhawkwebcomponents.github.io/keith-element",
+  "description": "",
+  "main": "keith-element.html",
+  "authors": [
+    "Rob Beers"
+  ],
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "../"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#>=0.3.0 <1.0.0"
+  },
+  "_release": "4caaccd1b0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "4caaccd1b052151cd925bb7a427ba2fa7a236d14"
+  },
+  "_source": "git://github.com/BlackhawkWebComponents/keith-element.git",
+  "_target": "master",
+  "_originalSource": "BlackhawkWebComponents/keith-element",
+  "_direct": true
+}

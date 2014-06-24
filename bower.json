@@ -1,0 +1,7 @@
+{
+  "name": "keith-element#gh-pages",
+  "private": true,
+  "dependencies": {
+    "keith-element": "BlackhawkWebComponents/keith-element#master"
+  }
+}
