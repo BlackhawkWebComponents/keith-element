@@ -1,5 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
-
+<link rel="import" href="../core-ajax/core-ajax.html">
 <!--
 Element providing ..
 
@@ -14,25 +14,67 @@ Element providing ..
 @status alpha
 @url http://blackhawkwebcomponents.github.io/keith-element
 -->
-<polymer-element name="keith-element" attributes="title">
+<polymer-element name="keith-element" attributes="url query facetFields response">
     <template>
-        <style>
-
-        </style>
-        <b>Keith's Element</b>
-        <p>{{title}}</p>
+        <core-ajax id="solr"
+                   url="{{url}}?indent=on&wt=json&q={{query}}{{facetFieldsParams}}"
+                   on-core-response="{{gotResponse}}"
+                   handleAs="json" ></core-ajax>
     </template>
     <script>
         Polymer('keith-element', {
             /**
-             * A title to be displayed on top of the query results list.
-             * @attribute title
+             * Fired when a response is received.
+             *
+             * @event solr-response
+             */
+
+            /**
+             * A url to the solr api.
+             * @attribute url
              * @type string
              */
-            title: 'Big Query Results',
+            url: '',
+            /**
+             * A query string to search solr.  It is what goes in q=
+             * @attribute query
+             * @type string
+             */
+            query: '',
+            /**
+             * A comma or space separated list of fields to facet on
+             * @attribute query
+             * @type string
+             */
+            facetFields: '',
+            facetFieldsParams:'',
+            facetFieldsChanged: function() {
+                this.facetFieldsParams = '';
+                var arr = this.facetFields.split(' ');
+                if (arr.length > 0) {
+                    this.facetFieldsParams = '&facet=true';
+                }
+                for (var i = 0; i < arr.length; ++i) {
+                    this.facetFieldsParams += '&facet.field='+arr[i].trim();
+                }
+            },
             ready: function () {
-                this.queryResults = [];
+                this.response = {};
+            },
+            /**
+             * Performs an Ajax request to the specified URL.
+             *
+             * @method go
+             */
+            go: function() {
+                this.$.solr.go();
+            },
+            gotResponse: function(e, detail) {
+                var resp = detail.response;
+                this.response = resp;
+                this.fire('solr-response', {response: resp});
             }
+
         });
     </script>
 </polymer-element>

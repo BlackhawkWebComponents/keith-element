@@ -6,14 +6,41 @@
 
     <script src="../platform/platform.js"></script>
     <link rel="import" href="keith-element.html">
-
 </head>
 <body unresolved>
+<template id="mytemplate" is="auto-binding">
 
-<p>A <code>&lt;keith-element&gt;</code> looks like this:</p>
-<keith-element title="A new template for Keith's element.">
-</keith-element>
+    <input type="text" value="{{query}}" placeholder="What are you lookin for?"/>
+    <button on-click="{{getResults}}">Get Results</button>
 
+    <keith-element id="solrapi" url="http://localhost:8983/solr/collection1/select/"
+                 query="{{query}}"
+                 facetFields="cat inStock"
+                 on-solr-response="{{gotResponse}}">
+    </keith-element>
 
+    <template repeat="{{d in response.docs}}">
+        <div>{{d.name}}</div>
+        <ul>Features:
+            <template repeat="{{f in d.features}}">
+                <li>{{f}}</li>
+            </template>
+        </ul>
+        <p>------------------------------------------------</p><br />
+    </template>
+
+</template>
+<script>
+    document.addEventListener('polymer-ready', function() {
+        var t = document.querySelector("#mytemplate");
+        t.getResults = function(){
+            t.$.solrapi.go();
+        }
+        t.gotResponse = function(e, detail){
+            console.log(JSON.stringify(detail.response.response));
+            t.response = detail.response.response;
+        }
+    });
+</script>
 </body>
 </html>
